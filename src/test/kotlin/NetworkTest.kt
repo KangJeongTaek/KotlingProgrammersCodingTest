@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test
+import java.util.ArrayList
 import kotlin.test.assertEquals
 
 /* 깊이/너비 우선 탐색(DFS/BFS) 난이도 Lv. 3*/
@@ -25,16 +26,33 @@ class NetworkTest {
 //     노드를 일단 반복해야겠지?
 //     이 노드가 새로운 노드인지는 어떻게 알지?
 //     새로운 노드인지를 확인할 공간이 필요하다.
-        val isChecked = BooleanArray(3)
+        val isChecked = BooleanArray(n)
+//     노드를 계속해서 이어서 탐색해야한다. 따라서 잇는 노드를 담는 공간이 필요하다.
+        val nodeArray = ArrayList<Int>()
 //      n 만큼 반복해서
-        for( i in 0 until n){
-            if(isChecked[i]) break
-            for(j in 0 until n){
-                if(computers[i][j] == 1){
-                    isChecked[j] = true
+        for( i in 0 until n) {
+            //체크 되지 않았다면 안을 계속해서 탐색 해봐야겠지?
+            if (!isChecked[i]) {
+                //현재 탐색하는 노드를 저장
+                nodeArray.add(i)
+                isChecked[i] = true
+                answer ++
+
+                //현재 탐색하는 노드를 기준으로 안을 계속 돌아봐야겠지?
+                while(nodeArray.isNotEmpty()){
+                    //탐색을 시작했으므로 탐색하려는 노드에서 삭제
+                    val startNode = nodeArray.removeFirst()
+                    for(j in 0 until n) {
+                        //isChecked[j]가 없으면 무한 반복 발생! 자기 자신이 들어갈 수 있으므로
+                        if(computers[startNode][j] == 1 && !isChecked[j]){
+                            //탐색해야하는 노드에 추가해야겠지?
+                            nodeArray.add(j)
+                            isChecked[j] = true
+                        }
+                    }
                 }
+
             }
-            answer ++
         }
         assertEquals(result, answer)
     }
