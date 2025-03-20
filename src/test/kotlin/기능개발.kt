@@ -1,12 +1,10 @@
-import java.util.*
+import java.util.Stack
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
-import kotlin.test.assertEquals
-import kotlin.test.assertNotSame
 
 class 기능개발 {
 
-//    val progresses = intArrayOf(95,90,99,99,80,99)
+    //    val progresses = intArrayOf(95,90,99,99,80,99)
 //    val speeds = intArrayOf(1,1,1,1,1,1)
 //    val result = intArrayOf(1,3,2)
     val progress = intArrayOf(93,30,55)
@@ -14,25 +12,32 @@ class 기능개발 {
     val result = intArrayOf(2,1)
     @Test
     fun solution() {
-        val queue : Queue<Int> = LinkedList()
-        val answer = mutableListOf<Int>()
+        val pairList : ArrayList<Pair<Int,Int>> = ArrayList<Pair<Int,Int>>()
 
-        for( i in 0 until progress.size){
-            val days = Math.ceil((100 - progress[i]).toDouble() / speeds[i]).toInt()
-            queue.add(days)
-        }
+        val size : Int = progress.size
 
-        while(!queue.isEmpty()){
-            var count = 1
-            val compareDay = queue.poll()
+        var answer = mutableListOf<Int>()
 
-            while(queue.isNotEmpty() && compareDay >= queue.peek()){
-                count++
-                queue.poll()
+        for(i in 0 until size) {
+            var compl : Int = progress[i]
+            var day : Int = 0
+            while(compl < 100){
+                compl += speeds[i]
+                day++
             }
-            answer.add(count)
+            pairList.add(i to day)
         }
+        println(pairList.toString())
 
+        while(pairList.isNotEmpty()){
+            val comparePair = pairList.removeFirst()
+            var answerCount = 1
+            while (pairList.isNotEmpty() && comparePair.second > pairList[0].second){
+                answerCount++
+                pairList.removeFirst()
+            }
+            answer.add(answerCount)
+        }
         assertContentEquals(result,answer.toIntArray())
     }
 }
