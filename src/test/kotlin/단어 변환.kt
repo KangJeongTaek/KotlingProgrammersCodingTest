@@ -1,4 +1,5 @@
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Test
+
 
 class `단어 변환` {
 

@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class 정렬 {
+class H_Index {
 
     val citations = intArrayOf(4,0,6,1,5)
     val result = 3

@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Test
 
 class `연속 부분 수열 합의 개수` {
 

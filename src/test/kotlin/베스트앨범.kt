@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.util.Arrays
