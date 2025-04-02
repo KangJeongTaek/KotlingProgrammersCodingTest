@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
 // 우선순위 디스크 컨트롤러가 이 작업을 처리했을 때 모든 요청 작업의 반환 시간의 평균의 정수부분을
 // return 하는 solution 함수를 작성해 주세요.
 class 디스크컨트롤러 {
-    var jobs: Array<IntArray> = arrayOf(intArrayOf(0,3), intArrayOf(1,9), intArrayOf(3,5))
+    var jobs: Array<IntArray> = arrayOf(intArrayOf(0, 3), intArrayOf(1, 9), intArrayOf(3, 5))
     val result = 8
 
     @Test
@@ -36,35 +36,36 @@ class 디스크컨트롤러 {
         //first = 소요시간
         //second = 요청 시각
         // third 번호 (index + 1)
-        val jobsQueue : PriorityQueue<Triple<Int,Int,Int>> = PriorityQueue<Triple<Int,Int,Int>>(
-            compareBy<Triple<Int,Int,Int>> { it.second }
+        val jobsQueue: PriorityQueue<Triple<Int, Int, Int>> = PriorityQueue<Triple<Int, Int, Int>>(
+            compareBy<Triple<Int, Int, Int>> { it.second }
         )
 
         //first = 소요시간
         //second = 요청 시각
         // third 번호 (index + 1)
         // 작업 순서 큐
-        val priortyQueue : PriorityQueue<Triple<Int,Int,Int>> = PriorityQueue<Triple<Int,Int,Int>>(
-            compareBy<Triple<Int,Int,Int>>{it.first}.thenBy { it.second }.thenBy { it.third }
+        val priortyQueue: PriorityQueue<Triple<Int, Int, Int>> = PriorityQueue<Triple<Int, Int, Int>>(
+            compareBy<Triple<Int, Int, Int>> { it.first }.thenBy { it.second }.thenBy { it.third }
         )
 
-        for ((i,array) in jobs.withIndex()){
-            jobsQueue.add(Triple(array[1],array[0],i + 1))
+        for ((i, array) in jobs.withIndex()) {
+            jobsQueue.add(Triple(array[1], array[0], i + 1))
         }
-        while(count < jobs.size){
-            while(jobsQueue.isNotEmpty() && jobsQueue.peek().second <= time)
+
+        while (count < jobs.size) {
+            while (jobsQueue.isNotEmpty() && jobsQueue.peek().second <= time)
                 priortyQueue.add(jobsQueue.poll())
 
-            if(priortyQueue.isNotEmpty()){
+            if (priortyQueue.isNotEmpty()) {
                 val job = priortyQueue.poll()
                 time += job.first
                 totalWait += time - job.second
                 count++
-            }else
+            } else
                 time++
         }
         var answer = totalWait / count
 
-        assertEquals(result,answer)
+        assertEquals(result, answer)
     }
 }
